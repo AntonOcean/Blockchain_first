@@ -1,8 +1,6 @@
 from app.blockchain import *
-from textwrap import dedent
 from flask import Flask, jsonify, request
 from uuid import uuid4
-
 
 
 app = Flask(__name__)
@@ -10,8 +8,8 @@ app = Flask(__name__)
 # Generate a globally unique address for this node
 # Создает произвольное имя для узла
 node_identifier = str(uuid4()).replace('-', '')
-
 blockchain = Blockchain()
+
 
 @app.route('/mine', methods=['GET'])
 def mine():
@@ -36,6 +34,7 @@ def mine():
     }
     return jsonify(response), 200
 
+
 @app.route('/transactions/new', methods=['POST'])
 def new_transactions():
     values = request.get_json()
@@ -51,6 +50,7 @@ def new_transactions():
     response = {'message': f'Transaction will be added to Block {index}'}
     return jsonify(response), 201
 
+
 @app.route('/chain', methods=['GET'])
 def full_chain():
     response = {
@@ -58,6 +58,7 @@ def full_chain():
         'length': len(blockchain.chain)
     }
     return jsonify(response), 200
+
 
 @app.route('/nodes/register', methods=['POST'])
 def register_nodes():
